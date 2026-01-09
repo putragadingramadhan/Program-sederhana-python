@@ -1,4 +1,4 @@
-
+import time,os
 class Dosen:
     data_mahasiswa = 0
     def __init__(self,nama,nim,kelas,matkul,kehadiran,uts,uas):
@@ -46,18 +46,17 @@ def master():
         print("3. Keluar")
         print("="*40)
         try:
+            #user selects menu
             pilihan = int(input("Silahkan pilih menu (1-3) : "))
 
             if pilihan == 1 :
-                cek = input("Apakan anda yakin memilih menu ini (True/False) : ")
-                if cek == "False":
+                #check options
+                if input("Apakah anda yakin? (Y/N): ").strip().lower() not in ("y","yes","true","1"):
                     continue
-                else:
-                    print("Silahkan lanjutkan ke pengisian data")
 
-                
+                # input
                 nama_mhs = input("Nama mahasiswa : ")
-                nim_mhs = input("Nim mahasiswa : ")
+                nim_mhs = input("Nim mahasiswa : ").strip()
                 kelas_mhs = input("Kelas mahasiswa : ")
 
                 print("Data mahasiswa berhasil tersimpan!silahkan input nilai")
@@ -76,20 +75,20 @@ def master():
                 simpan.Tampil_data_mentah()
 
             elif pilihan == 2 :
-                cek = input("Apakan anda yakin memilih menu ini (True/False) : ")
-                if cek == "False":
+                # check options
+                if input("Apakah anda yakin? (Y/N): ").strip().lower() not in ("y","yes","true","1"):
                     continue
-                else:
-                    print("Berikut data diri anda")
 
-                cek_NIM = input("Masukkan NIM anda : ")
-                for mhs in data_mahasiswa:
-                    if mhs.nim == cek_NIM:
-                        mhs.tampilkan_nilaiALLA_matkl()
-                        break
-                    else:
-                        print("NIM anda tidak ditemukan")
-                        continue
+                
+                # check NIM 
+                cek_NIM = input("Masukkan NIM anda : ").strip()
+                mhs = next((m for m in data_mahasiswa if m.nim == cek_NIM),None)
+                if mhs :
+                    print("NIM ditemukan")
+                    mhs.tampilkan_nilaiALLA_matkl()
+                else:
+                    print("NIM tidak ditrmukan")
+                
             elif pilihan == 3:
                 print("Terima kasih telah menggunakan layanan kami")
                 break
