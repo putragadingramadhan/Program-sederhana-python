@@ -1,4 +1,6 @@
-import time,os
+from colorama import Fore, Style, init #pip install colorama
+import time
+init(autoreset=True)#instalisasi colorama
 class Dosen:
     data_mahasiswa = 0
     def __init__(self,nama,nim,kelas,matkul,kehadiran,uts,uas):
@@ -36,16 +38,20 @@ class Dosen:
         print(f"Matkul  : {self.namaMatkul}")
         print(f"Nilai   : {self.Konversi_nilai()}")
 
+
+
 def master():
     data_mahasiswa = []
     while True:
-        print("\n"+"="*40)
-        print("Silahkan pilih menu")
+
+        print(Fore.BLUE+"\n"+"="*40)
+        print(Fore.RED + "Silahkan pilih menu"+Style.RESET_ALL)
         print("1. Dosen")
         print("2. Mahasiswa")
         print("3. Keluar")
-        print("="*40)
+        print(Fore.BLUE+"="*40+Style.RESET_ALL)
         try:
+            time.sleep(2)
             #user selects menu
             pilihan = int(input("Silahkan pilih menu (1-3) : "))
 
@@ -66,15 +72,18 @@ def master():
                     nilai_kehadiran = int(input("Nilai kehadiran : "))
                     nilai_uts = int(input("Nilai uts : "))
                     nilai_uas = int(input("Nilai UAS : "))
-                except ValueError:
-                    print("Silahkam masukkan angka")
 
-                simpan = Dosen(nama_mhs,nim_mhs,kelas_mhs,nama_mtkl,nilai_kehadiran,nilai_uts,nilai_uas)
-                data_mahasiswa.append(simpan)
-                print("\nData berhasil disimpan")
-                simpan.Tampil_data_mentah()
+                    simpan = Dosen(nama_mhs,nim_mhs,kelas_mhs,nama_mtkl,nilai_kehadiran,nilai_uts,nilai_uas)
+                    data_mahasiswa.append(simpan)
+
+                    print(Fore.GREEN + "Data berhasil disimpan")
+                    simpan.Tampil_data_mentah()
+                except ValueError:
+                    print(Fore.RED+"Silahkam masukkan angka"+Style.RESET_ALL)
+                
 
             elif pilihan == 2 :
+                
                 # check options
                 if input("Apakah anda yakin? (Y/N): ").strip().lower() not in ("y","yes","true","1"):
                     continue
@@ -84,17 +93,23 @@ def master():
                 cek_NIM = input("Masukkan NIM anda : ").strip()
                 mhs = next((m for m in data_mahasiswa if m.nim == cek_NIM),None)
                 if mhs :
-                    print("NIM ditemukan")
+                    print(Fore.GREEN+"NIM ditemukan"+Style.RESET_ALL)
                     mhs.tampilkan_nilaiALLA_matkl()
                 else:
-                    print("NIM tidak ditrmukan")
+                    print(Fore.RED+"NIM tidak ditrmukan"+Style.RESET_ALL)
                 
             elif pilihan == 3:
-                print("Terima kasih telah menggunakan layanan kami")
+                print(Fore.MAGENTA+"Terima kasih telah menggunakan layanan kami"+Style.RESET_ALL)
                 break
+
+            else:
+                print(Fore.RED+"Pilihan tidak tersedia!"+Style.RESET_ALL)
+                time.sleep(1)
+            
         except ValueError : 
-            print("Mohon masukkan angka")
-master()
+            print(Fore.RED+"Mohon masukkan angka"+Style.RESET_ALL)
+if __name__ == "__main__":
+    master()
 
 
 
