@@ -45,7 +45,7 @@ def master():
     while True:
 
         print(Fore.BLUE+"\n"+"="*40)
-        print(Fore.RED + "Silahkan pilih menu"+Style.RESET_ALL)
+        print(Fore.LIGHTGREEN_EX + "Silahkan pilih menu"+Style.RESET_ALL)
         print("1. Dosen")
         print("2. Mahasiswa")
         print("3. Keluar")
@@ -83,11 +83,9 @@ def master():
                 
 
             elif pilihan == 2 :
-                
                 # check options
                 if input("Apakah anda yakin? (Y/N): ").strip().lower() not in ("y","yes","true","1"):
                     continue
-
                 
                 # check NIM 
                 cek_NIM = input("Masukkan NIM anda : ").strip()
@@ -110,10 +108,3 @@ def master():
             print(Fore.RED+"Mohon masukkan angka"+Style.RESET_ALL)
 if __name__ == "__main__":
     master()
-
-
-
-
-    
-
-    
