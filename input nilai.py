@@ -1,6 +1,7 @@
 from colorama import Fore, Style, init #pip install colorama
 import time
 init(autoreset=True)#instalisasi colorama
+
 class Dosen:
     data_mahasiswa = 0
     def __init__(self,nama,nim,kelas,matkul,kehadiran,uts,uas):
@@ -37,7 +38,6 @@ class Dosen:
         print(f"NIM     : {self.nim}")
         print(f"Matkul  : {self.namaMatkul}")
         print(f"Nilai   : {self.Konversi_nilai()}")
-
 
 
 def master():
