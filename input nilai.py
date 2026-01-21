@@ -1,4 +1,4 @@
-from colorama import Fore, Style, init #pip install colorama
+from colorama import Fore, Style, init #pip install colorama, untuk install library
 import time
 init(autoreset=True)#instalisasi colorama
 
