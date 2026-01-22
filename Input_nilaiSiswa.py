@@ -8,7 +8,7 @@ class guru :
         self.nama_guru = nama
         self.id_guru = id
 
-        guru.data_tecther =+ 1
+        guru.data_tecther += 1
         
 
     def tampilkan(self):
