@@ -1,6 +1,7 @@
 from colorama import Fore, Style, init
 init(autoreset=True)
 import time as t
+import os
 class guru :
     data_tecther = 0
 
@@ -10,10 +11,9 @@ class guru :
 
         guru.data_tecther += 1
         
-
     def tampilkan(self):
         t.sleep(0.5)
-        print("===Data Guru===")
+        print(f"\n{Fore.CYAN}===Data Guru===")
         print(f"Nama Guru   : {self.nama_guru}")
         print(f"Id Guru     : {self.id_guru}")
 
@@ -26,6 +26,7 @@ class Siswa:
         self.nilai_ips = ips
         self.nilai_ipa = ipa
         self.nilai_mtk = mtk
+        self.nilai = {"IPS" : ips, "IPA" : ipa, "MTK" : mtk}
 
         Siswa.data_siswa +=1
 
@@ -38,7 +39,7 @@ class Siswa:
         print(f"Nilai MTK    : {self.nilai_mtk}")
 
     def total_value(self):
-        return (self.nilai_ips + self.nilai_ipa + self.nilai_mtk)/3
+        return sum(self.nilai.values())/len(self.nilai)
     
     def status_lulus(self):
         if self.total_value()>= 75.00:
@@ -50,15 +51,18 @@ class Siswa:
         print("\n===NIlai Siswa===")
         print(f"Nama siswa      : {self.nama}")
         print(f"NISN            : {self.NISN}")
-        print(f"Nilai IPS       : {self.nilai_ips}")
-        print(f"NIlai IPA       : {self.nilai_ipa}")
-        print(f"Nilai MTK       : {self.nilai_mtk}")
+        for mapel, skor in self.nilai.items():
+            print(f"Nilai {mapel} : {skor}")
         print(f"Nilai Rata-rata : {self.total_value():.2f}")
         print(f"Status          : {self.status_lulus()}")
 
+def ge_input_konfirmasi (pesan):
+    return input(f"{pesan} (Y/N) : ").strip().lower()=='y'
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 def tampilakn():
     data_siswa = []
-    data_guru = []
 
     while True:
         for i in range(3,0,-1):
@@ -77,8 +81,7 @@ def tampilakn():
             pilihan = int(input("Silahkan pilih menu (1-3): "))
 
             if pilihan == 1 :
-                if input("Apakah anda yakin (Y/N) : ").lower().strip() not in ("yes","y"):
-                    continue
+                if not ge_input_konfirmasi("Apakah anda guru?"): continue
                 print("Silahkan input data guru terlebih dahulu")
 
                 nama_guru = input("Nama guru : ")
@@ -86,7 +89,6 @@ def tampilakn():
                     id_guru = int(input("ID guru : "))
 
                     sip = guru(nama_guru,id_guru)
-                    data_guru.append(sip)
                     sip.tampilkan()
                     t.sleep(2)
                 except ValueError:
@@ -109,20 +111,18 @@ def tampilakn():
                 print(f"Terima kasih Bapak/Ibu {nama_guru} yang sudah input data siswa")
 
             elif pilihan == 2:
-                if input("Apakah anda yakin (Y/N) : ").strip().lower() not in ("yes","y"):
-                    continue
+                if not ge_input_konfirmasi("Apakah anda siswa?"): continue
 
                 nisn = int(input("Silahkan masukkan NISN : "))
                 ssw = next((s for s in data_siswa if s.NISN == nisn),None)
                 if ssw:
-                    print(Fore.GREEN,"NISN siswa ditemukan",Style.RESET_ALL)
+                    print(f"{Fore.GREEN}NISN siswa ditemukan{Style.RESET_ALL}")
                     ssw.show_total_value()
                 else:
-                    print(Fore.RED,"NISN tidak ditemukan",Style.RESET_ALL)
+                    print(f"{Fore.RED}NISN siswa tidak ditemukan{Style.RESET_ALL}")
                 
             elif pilihan == 3:
-                if input("Apakah anda yakin (Y/N) : ").strip().lower() not in ("yes","y"):
-                    continue
+                if not ge_input_konfirmasi("Apakah anda yakin?"): continue
                 print("Terima kasih telah menggunakan layanan kami")
                 break
             
@@ -132,5 +132,5 @@ def tampilakn():
         except ValueError:
             print("Mohon masukkan angka")
 
-if __name__ =="__main__":
+if __name__ == "__main__":
     tampilakn()
