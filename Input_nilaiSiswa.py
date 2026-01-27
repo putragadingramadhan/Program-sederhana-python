@@ -2,20 +2,7 @@ from colorama import Fore, Style, init
 init(autoreset=True)
 import time as t
 import os
-class guru :
-    data_tecther = 0
 
-    def __init__(self,nama,id):
-        self.nama_guru = nama
-        self.id_guru = id
-
-        guru.data_tecther += 1
-        
-    def tampilkan(self):
-        t.sleep(0.5)
-        print(f"\n{Fore.CYAN}===Data Guru===")
-        print(f"Nama Guru   : {self.nama_guru}")
-        print(f"Id Guru     : {self.id_guru}")
 
 class Siswa:
     data_siswa = 0
@@ -61,6 +48,14 @@ def ge_input_konfirmasi (pesan):
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+#data teacther
+data_teacther = {
+        "A22411" : "Arnanda raenaldi, S.Kom.",
+        "A22412" : "Muhammad Rifqi Atsani, M.Kom.",
+        "B22413" : "Atipa Muji, M.Kom",
+        "B22414" : "Wakhidin, S.Pd."
+}
 def tampilakn():
     data_siswa = []
 
@@ -70,7 +65,7 @@ def tampilakn():
             t.sleep(1)
         print("\n"+"="*40)
         print("===Silahkan pilih menu===")
-        t.sleep(1)
+        t.sleep(0.5)
         print("1. Sebagai Guru")
         print("2. Sebagai Siswa")
         print("3. Keluar")
@@ -82,19 +77,15 @@ def tampilakn():
 
             if pilihan == 1 :
                 if not ge_input_konfirmasi("Apakah anda guru?"): continue
-                print("Silahkan input data guru terlebih dahulu")
+                print("Silahkan input ID guru : ")
 
-                nama_guru = input("Nama guru : ")
-                try:
-                    id_guru = int(input("ID guru : "))
-
-                    sip = guru(nama_guru,id_guru)
-                    sip.tampilkan()
-                    t.sleep(2)
-                except ValueError:
-                    print(Fore.RED,"Mohon masukkan id dengan angka!",Style.RESET_ALL)
-                print(f"Baik Bapak/Ibu {nama_guru}, silahkan isi data siswa")
-                t.sleep(0.5)
+                cek_id_guru = input("Masukkan ID guru : ")
+                if cek_id_guru in data_teacther:
+                    print(f"ID guru ditemukan : {data_teacther[cek_id_guru]}")
+                    print("Silahkan input data siswa")
+                else:
+                    print(f"ID guru {Fore.RED}tidak ditemukan{Style.RESET_ALL}")
+                    continue
 
                 #input data siswa
                 nama_siswa = input("\nNama siswa : ")
@@ -108,7 +99,7 @@ def tampilakn():
                     simpan.show_data()
                 except ValueError:
                     print(Fore.RED,"Mohon masukkan angka",Style.RESET_ALL)
-                print(f"Terima kasih Bapak/Ibu {nama_guru} yang sudah input data siswa")
+                print(f"Terima kasih Bapak/Ibu {data_teacther[cek_id_guru]} yang sudah input data siswa")
 
             elif pilihan == 2:
                 if not ge_input_konfirmasi("Apakah anda siswa?"): continue
@@ -127,7 +118,7 @@ def tampilakn():
                 break
             
             else:
-                print("Pilihan tidak ditemukan")
+                print(f"Pilihan {Fore.RED}tidak{Style.RESET_ALL} ditemukan")
                 break
         except ValueError:
             print("Mohon masukkan angka")
