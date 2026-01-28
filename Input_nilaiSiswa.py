@@ -2,7 +2,7 @@ from colorama import Fore, Style, init
 init(autoreset=True)
 import time as t
 import os
-
+import json
 
 class Siswa:
     data_siswa = 0
@@ -34,15 +34,58 @@ class Siswa:
         else:
             return f"Dinyatakan {Fore.RED}Tidak Lulus{Style.RESET_ALL}"
     
-    def show_total_value(self):
+    def show_total_value(self,rank):
         print("\n===NIlai Siswa===")
         print(f"Nama siswa      : {self.nama}")
         print(f"NISN            : {self.NISN}")
+        print("-"*28)
         for mapel, skor in self.nilai.items():
-            print(f"Nilai {mapel} : {skor}")
+            print(f"Nilai {mapel:<10} : {skor}")
+        print("-"*28)
         print(f"Nilai Rata-rata : {self.total_value():.2f}")
         print(f"Status          : {self.status_lulus()}")
+        color_rank = Fore.CYAN if rank <= 3 else Fore.WHITE
+        print(f"Rangking ke-      : {color_rank}{rank} dari {Siswa.data_siswa} siswa")
+        print(f"{Fore.YELLOW}=================\n")
 
+def tampilkan_rangking(nisn_target,data_siswa):
+    urutan_rangking = sorted(data_siswa, key=lambda s: s.total_value(), reverse=True)
+    for index, siswa in enumerate(urutan_rangking):
+        if siswa.NISN == nisn_target:
+            return index + 1
+        return None
+    
+def simpan_ke_file(data_siswa, nama_file = "Database_siswa.txt"):
+    try:
+        with open(nama_file, "w") as f:
+            data_terstruktur = []
+            for s in data_siswa:
+                data_terstruktur.append({
+                    "nama" : s.nama,
+                    "nisn" : s.NISN,
+                    "ips" : s.nilai_ips,
+                    "ipa" : s.nilai_ipa,
+                    "mtk" : s.nilai_mtk
+                })
+                json.dump(data_terstruktur,f)
+    except Exception as e:
+        print(f"Gagal menyimpan data : {e}")
+
+def muat_dari_file(nama_file = "database_siswa.txt"):
+    if not os.path.exists(nama_file):
+        return []
+    
+    try:
+        with open(nama_file, "r")as f:
+            data_load = json.load(f)
+            data_siswa =[]
+            for d in data_load:
+                siswa_obj = Siswa(d['nama'], d['nisn'], d['ips'], d['ipa'], d['mtk'])
+                data_siswa.append(siswa_obj)
+            return data_siswa
+    except:
+        return[]
+    
 def ge_input_konfirmasi (pesan):
     return input(f"{pesan} (Y/N) : ").strip().lower()=='y'
 
@@ -57,7 +100,7 @@ data_teacther = {
         "B22414" : "Wakhidin, S.Pd."
 }
 def tampilakn():
-    data_siswa = []
+    data_siswa = muat_dari_file()
 
     while True:
         for i in range(3,0,-1):
@@ -96,19 +139,21 @@ def tampilakn():
                     nilai_mtk = int(input("Nilai MTK : "))
                     simpan = Siswa(nama_siswa,nisn_siswa,nilai_ips,nilai_ipa,nilai_mtk)
                     data_siswa.append(simpan)
+                    simpan_ke_file(data_siswa)
                     simpan.show_data()
+                    print(f"Data berhasil disimpan ke file!")
                 except ValueError:
                     print(Fore.RED,"Mohon masukkan angka",Style.RESET_ALL)
                 print(f"Terima kasih Bapak/Ibu {data_teacther[cek_id_guru]} yang sudah input data siswa")
 
             elif pilihan == 2:
                 if not ge_input_konfirmasi("Apakah anda siswa?"): continue
-
                 nisn = int(input("Silahkan masukkan NISN : "))
                 ssw = next((s for s in data_siswa if s.NISN == nisn),None)
                 if ssw:
                     print(f"{Fore.GREEN}NISN siswa ditemukan{Style.RESET_ALL}")
-                    ssw.show_total_value()
+                    rank = tampilkan_rangking(nisn,data_siswa)
+                    ssw.show_total_value(rank)
                 else:
                     print(f"{Fore.RED}NISN siswa tidak ditemukan{Style.RESET_ALL}")
                 
