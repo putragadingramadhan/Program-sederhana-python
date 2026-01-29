@@ -9,6 +9,11 @@ class Bank:
         "White Card" : 20000000,
         "Black Card" : 100000000
     }
+    data_teller = {
+        "AB13618" : "Stella Putri, S.E.",
+        "AC14611" : "Dimas, M.E.",
+        "AA11601" : "Hamengkunegoro, S.E., MBA."
+    }
 
 
     def __init__(self,name1st,name2nd,tempat,tanggal,nik,alamat):
@@ -74,15 +79,17 @@ def checking_options(pesan):
 
 def user():
     nasabah_baru = None
+    
     while True:
         print("\n"+" "*5+"=== MENU BANK ===")
         print("1. Buat akun baru")
         print("2. Tambah uang (deposit)")
         print("3. Ambil uang (withdraw)")
         print("4. Lihat informasi & saldo")
-        print("5. Keluar")
+        print("5. Jumlah nasabah (khusus teller)")
+        print("6. Keluar")
 
-        pilihan = input("Pilih menu (1-5) : ")
+        pilihan = input("Pilih menu (1-6) : ")
 
         if pilihan == "1":
             if not checking_options("Apakah anda ingi membuat account?"):continue
@@ -142,6 +149,16 @@ def user():
                 print("Belum ada akun terdaftar!")
 
         elif pilihan == "5":
+            if not checking_options("Apakah anda teller?"):continue
+            print("Silahkan inpu ID anda")
+            cek_id = input("Masukkan ID anda : ")
+            if cek_id in Bank.data_teller:
+                print(f"ID ditemukan, selamat datang Bapak/Ibu {Bank.data_teller[cek_id]}")
+                print(f"ini adalah jumlah nasabah : {Bank.data_nasabah}")
+            else:
+                print("ID teller tidak ditemukan!akses ditolak")
+
+        elif pilihan == "6":
             print("Trima kasih")
             sys.exit()
         else:
