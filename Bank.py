@@ -69,7 +69,7 @@ class Bank:
         if tarik > self.saldo:
             print("Maaf, saldo tidak mencukupi")
         else:
-            self.balance_update(-tarik)#angka negatif untukmpenarikan
+            self.balance_update(-tarik) #angka negatif untukmpenarikan
             print(f"Penarikan berhasil! anda mengambil uang Rp{tarik:,}")
     def balance_update(self,amount):
         self.saldo += amount
