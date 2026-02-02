@@ -55,6 +55,7 @@ class Bank:
         print(f"Jenis kartu               : {self.warna_kartu}")
         print(f"Total saldo               : Rp{self.saldo:,}") 
         print("-"*46)
+        
 
     def deposit(self):
         tambah = int(input("Masukkan jumlah uang yang ignin ditabung : "))
