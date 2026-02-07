@@ -6,12 +6,13 @@ import seaborn as sns # untuk visulisasi lanjutan
 from rich.console import Console
 from rich.table import Table
 
+
 df = pd.DataFrame({
-    "Order_Amount" : [250, 400, 150, 500, 350, 420, 310, 280, 390, 450],
-    "Num_Items" : [3, 5, 2, 6, 4, 5, 4, 3, 5, 6],
-    "Customer_Age" : [25, 34, 22, 45, 31, 37, 29, 28, 33, 40],
-    "Discount" : [5, 10, 0, 15, 10, 12, 8, 5, 10, 15],
-    "Delivery_Time" : [29, 45, 20, 60, 40, 50, 35, 30, 45, 55 ]
+    "Order_Amount" : [250, 400,140, 150, 500, 350, 420, 310, 280, 390, 450],
+    "Num_Items"    : [3, 5, 2, 6,7, 4, 5, 4, 3, 5, 6],
+    "Customer_Age" : [25, 33,34, 22, 45, 31, 37, 29, 28, 33, 40],
+    "Discount"     : [5,6, 10, 0, 15, 10, 12, 8, 5, 10, 15],
+    "Delivery_Time" : [29,34, 45, 20, 60, 40, 50, 35, 30, 45, 55 ]
 })
 console = Console()
 table = Table(show_header=True, header_style="bold magenta")
